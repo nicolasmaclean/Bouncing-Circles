@@ -5,6 +5,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 var c = canvas.getContext('2d');
+var w = 100;
 
 function getRandomColor(){
     return Math.floor(Math.random()*16777215).toString(16);
@@ -45,40 +46,54 @@ function Circle(x, y, dx, dy, radius, color) {
 
 var circles = [];
 
-for(var i = 0; i < 100; i++){
-    var radius = Math.floor(Math.random()*25);
-    var x = radius + Math.floor(Math.random()*(window.innerWidth-radius*2));
-    var y = radius + Math.floor(Math.random()*(window.innerHeight-radius*2));
-    var dx = Math.floor(Math.random()*3-1.5);
-    var dy = Math.floor(Math.random()*3-1.5);
-    if(Math.abs(dx) < .2)
-        dx++;
-    if(Math.abs(dy) < .2)
-        dy++;
-    var color = getRandomColor();
-    
-    if(dx > -.5 || dx < .5)
-        dx = dx*3;
-    if(dy > -.5 || dy < .5)
-        dy = dy*3;
-    
-    circles.push(new Circle(x, y, dx, dy, radius, color));
-}
+window.addEventListener('resize', init);
 
-for(var i = 0; i < 100; i++){
-    var radius = Math.floor(Math.random()*25);
-    var x = radius + Math.floor(Math.random()*(window.innerWidth-radius*2));
-    var y = radius + Math.floor(Math.random()*(window.innerHeight-radius*2));
-    var dx = Math.floor(1+Math.random()*3);
-    var dy = Math.floor(1+Math.random()*3);
-    var color = getRandomColor();
-    
-    if(dx > -.5 || dx < .5)
-        dx = dx*3;
-    if(dy > -.5 || dy < .5)
-        dy = dy*3;
-    
-    circles.push(new Circle(x, y, dx, dy, radius, color));
+function init() {
+    circles = [];
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    if(canvas.height < canvas.width){
+        w = canvas.height/7;
+    } else {
+        w = canvas.width/7;
+    }
+
+    for(var i = 0; i < w; i++){
+        var radius = Math.floor(Math.random()*25);
+        var x = radius + Math.floor(Math.random()*(window.innerWidth-radius*2));
+        var y = radius + Math.floor(Math.random()*(window.innerHeight-radius*2));
+        var dx = Math.floor(Math.random()*3-1.5);
+        var dy = Math.floor(Math.random()*3-1.5);
+        if(Math.abs(dx) < .2)
+            dx++;
+        if(Math.abs(dy) < .2)
+            dy++;
+        var color = getRandomColor();
+        
+        if(dx > -.5 || dx < .5)
+            dx = dx*3;
+        if(dy > -.5 || dy < .5)
+            dy = dy*3;
+        
+        circles.push(new Circle(x, y, dx, dy, radius, color));
+    }
+
+    for(var i = 0; i < w; i++){
+        var radius = Math.floor(Math.random()*25);
+        var x = radius + Math.floor(Math.random()*(window.innerWidth-radius*2));
+        var y = radius + Math.floor(Math.random()*(window.innerHeight-radius*2));
+        var dx = Math.floor(1+Math.random()*3);
+        var dy = Math.floor(1+Math.random()*3);
+        var color = getRandomColor();
+        
+        if(dx > -.5 || dx < .5)
+            dx = dx*3;
+        if(dy > -.5 || dy < .5)
+            dy = dy*3;
+        
+        circles.push(new Circle(x, y, dx, dy, radius, color));
+    }
 }
 
 function animate(){
@@ -90,4 +105,5 @@ function animate(){
     }
 }
 
+init();
 animate();
